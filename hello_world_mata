@@ -1,0 +1,103 @@
+mata
+
+/* just type 'mata' into your STATA session 
+mata clear will reset ... 
+end will bring you back to STATA but not clear
+*/
+
+function declare_population(N)
+{
+
+/* 
+declare_population ultimately should do three things:
+1) One or more level calls, with or without existing data 
+2) Import existing data and add new variables 
+3) Provide an `N` without importing data or creating levels
+ */
+
+    id = J(N,1,0)
+    for(i=1; i<=N; i++){
+        id[i] = i
+    } 
+    return(id)
+
+}
+
+function declare_assignment(numeric vector id, m){
+
+    treatment = J(length(id), 1, 0)
+    for(i=1; i<=m; i++){
+        treatment[i] = 1
+    }
+    return(treatment)
+
+}   
+
+function declare_potential_outcomes(treatment, delta, distribution, param1, |param2){
+    
+/*
+distribution must be "bernoulli", "binomial", "normal"
+If Gaussian, param1 is mean and param2 is sd; potential outcomes Y ~ N(delta*Z + mu, sd)
+If Bernoulli, param1 is p only provided, Y ~ bernoulli(delta*Z + p)
+If Binomial, param2 is k, the number of trials
+*/
+
+    n = length(treatment)
+
+    if(distribution == "normal"){
+
+        Y = rnormal(n, 1, param1, param2)
+        Y = Y + delta*treatment
+  
+    } 
+
+    if(distribution == "bernoulli"){
+
+        Y = J(n, 1, 0)
+
+        Y0 = rbinomial(n, 1, 1, param1)
+        Y1 = rbinomial(n, 1, 1, param1 + delta)
+
+        for(i=1; i<=n; i++){
+            if(treatment[i] == i){
+                Y[i] = Y1[i]
+            }else{
+                Y[i] = Y0[i]
+            }
+        }
+    }
+
+    if(distribution == "binomial"){
+
+        Y = J(n, 1, 0)
+
+        Y0 = rbinomial(n, 1, param2, param1)
+        Y1 = rbinomial(n, 1, param2, param1 + delta)
+
+        for(i=1; i<=n; i++){
+            if(treatment[i] == i){
+                Y[i] = Y1[i]
+            }else{
+                Y[i] = Y0[i]
+            }
+        }
+    }    
+    return(Y)
+}
+
+
+my_pop = declare_population(100)
+my_trtmt = declare_assignment(my_pop, 40)
+my_PO = declare_potential_outcomes(my_trtmt, 10, "normal", 80, 12)
+mean(my_PO)
+mean(my_PO[1..40])
+mean(my_PO[41..100])
+
+my_PO = declare_potential_outcomes(my_trtmt, .2, "bernoulli", .5)
+my_PO = declare_potential_outcomes(my_trtmt, .2, "binomial", .5, 10)
+
+end
+
+
+
+
