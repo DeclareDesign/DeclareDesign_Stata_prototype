@@ -126,9 +126,29 @@ sum(mean(sims[1..40,.]) - mean(sims[41..100,.]) :> .15)/20
 /* (mean absolute) bias */
 sum( abs(mean(sims[1..40,.]) - mean(sims[41..100,.]) :- .15))/20
 
+class design{
+    real scalar n, m  /* n obs, m treated units */
+    pop(), assign() /* wrappers */
+}
+
+function design::pop()
+{
+  return(declare_population(n))
+}
+
+function design::assign()
+{
+  return(declare_assignment(declare_population(n), m))
+}
+
+a = design()
+a.n = 20
+a.m = 10
+a.pop()
+a.assign()
+
 /* mata drop declare_population()  */
 /* need () to use drop function */
-
 /* end */
 
 
