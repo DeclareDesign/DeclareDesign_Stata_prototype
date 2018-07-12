@@ -118,6 +118,17 @@ mean(sims)  /* really colMeans() */
 sims2 = simulate(&declare_potential_outcomes(), 20, my_trtmt, .2, "binomial", .5, 10)
 mean(sims2)
 
+mean(sims[1..40,.])   /* treated units, sim means */
+
+/* power calculation if 40 treated units and 20 sims, as above */
+sum(mean(sims[1..40,.]) - mean(sims[41..100,.]) :> .15)/20
+
+/* (mean absolute) bias */
+sum( abs(mean(sims[1..40,.]) - mean(sims[41..100,.]) :- .15))/20
+
+/* mata drop declare_population()  */
+/* need () to use drop function */
+
 /* end */
 
 
