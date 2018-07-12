@@ -1,5 +1,3 @@
-mata
-
 /* just type 'mata' into your STATA session 
 mata clear will reset ... 
 end will bring you back to STATA but not clear
@@ -92,7 +90,11 @@ function simulate(f, Nsims, treatment, delta, distribution, param1, |param2){
     Y = J(length(treatment), Nsims, 0)
 
     for(i=1; i<= Nsims; ++i){
-        Y[i,] = (*f)(treatment, delta, distribution, param1)
+        if(args() == 6){
+          Y[,i] = (*f)(treatment, delta, distribution, param1)
+        } else{
+          Y[,i] = (*f)(treatment, delta, distribution, param1, param2)
+        } 
     }
 
     return(Y)
@@ -111,9 +113,12 @@ my_PO = declare_potential_outcomes(my_trtmt, .2, "bernoulli", .5)
 my_PO = declare_potential_outcomes(my_trtmt, .2, "binomial", .5, 10)
 
 rseed(123)
-sims = simulate(&declare_potential_outcomes(), 20, .2, "binomial", .5, 10)
+sims = simulate(&declare_potential_outcomes(), 20, my_trtmt, .2, "bernoulli", .5)
+mean(sims)  /* really colMeans() */
+sims2 = simulate(&declare_potential_outcomes(), 20, my_trtmt, .2, "binomial", .5, 10)
+mean(sims2)
 
-end
+/* end */
 
 
 
