@@ -126,9 +126,13 @@ sum(mean(sims[1..40,.]) - mean(sims[41..100,.]) :> .15)/20
 /* (mean absolute) bias */
 sum( abs(mean(sims[1..40,.]) - mean(sims[41..100,.]) :- .15))/20
 
+
+/* example of defining custum class below */
+/* along with associated function */
+
 class design{
-    real scalar n, m  /* n obs, m treated units */
-    pop(), assign() /* wrappers */
+    real scalar n, m     /* n obs, m treated units */
+    pop(), assign()      /* wrappers for declare_*() defined above */
 }
 
 function design::pop()
@@ -146,6 +150,8 @@ a.n = 20
 a.m = 10
 a.pop()
 a.assign()
+
+
 
 /* mata drop declare_population()  */
 /* need () to use drop function */
