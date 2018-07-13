@@ -131,13 +131,17 @@ sum( abs(mean(sims[1..40,.]) - mean(sims[41..100,.]) :- .15))/20
 /* along with associated function */
 
 class design{
-    real scalar n, m     /* n obs, m treated units */
+    real scalar n, m, k     /* n obs, m treated units, k groups */
     pop(), assign()      /* wrappers for declare_*() defined above */
 }
 
 function design::pop()
 {
-  return(declare_population(n))
+  if(k == 0){
+    return(declare_population(n))
+  }else{
+    return((declare_population(n), rdiscrete(n, 1, J(1, k, 1/k))))
+  }
 }
 
 function design::assign()
@@ -145,9 +149,11 @@ function design::assign()
   return(declare_assignment(declare_population(n), m))
 }
 
+
 a = design()
 a.n = 20
 a.m = 10
+a.k = 3
 a.pop()
 a.assign()
 
