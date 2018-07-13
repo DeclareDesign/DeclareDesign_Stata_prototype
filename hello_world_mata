@@ -152,6 +152,39 @@ a.pop()
 a.assign()
 
 
+/* example with STATA data */
+/* type 'end' and then the following command, then back to mata */
+/* sysuse auto */
+/* mata */
+
+st_view(y=., ., "mpg")
+y  /* mileage data from STATA side */
+
+
+/* function below gives option of basing ID variable on N from STATA side... */
+
+function declare_pop(N_or_varname)
+{
+
+  if(eltype(N_or_varname) == "string"){
+    
+    st_view(y=., ., N_or_varname)
+    N = length(y)
+    
+  }else{
+    N = N_or_varname
+  }
+  id = J(N,1,0)
+  for(i=1; i<=N; i++){
+      id[i] = i
+  } 
+  return(id)
+
+}
+
+declare_pop(10)
+declare_pop("foreign")
+declare_pop("mpg")
 
 /* mata drop declare_population()  */
 /* need () to use drop function */
