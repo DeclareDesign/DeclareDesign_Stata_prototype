@@ -197,5 +197,20 @@ declare_pop("mpg")
 /* end */
 
 
+/* example program below where MATA is called from STATA */
+
+program define mymean, eclass
+        version 14
+ 
+        syntax varlist(max=1)
+ 
+        mata: x  = st_data(., "`varlist'")
+        mata: w  = mean(x)
+        mata: st_matrix("Q", w)
+ 
+        display "The point estimates are in Q"
+        matrix list Q
+ 
+end
 
 
