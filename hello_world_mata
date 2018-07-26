@@ -198,7 +198,6 @@ declare_pop("mpg")
 
 
 /* example program below where MATA is called from STATA */
-
 program define mymean, eclass
         version 14
  
@@ -213,4 +212,8 @@ program define mymean, eclass
  
 end
 
+/* for extensive example: */
+/* https://www.stata.com/users/ddrukker/blog/myregress11.ado */
+/* works best when separate file in STATA sysdir() folder, not command line */
+/* shows regression computed in MATA with STATA's [if] [in] syntax for variable selection, filtering */
 
