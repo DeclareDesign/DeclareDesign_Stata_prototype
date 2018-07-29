@@ -219,3 +219,34 @@ end
 /* shows regression computed in MATA with STATA's [if] [in] syntax for variable selection, filtering */
 
 
+/* here is some STATA --> MATA --> STATA code */
+
+sysuse auto /* 74 obs on 12 variables */
+display _N
+display c(k)
+putmata * 
+/* above passes all variables to MATA */
+/* putmata allows [if] [in] [,options] */
+
+mata
+n = rows(mpg)
+id = J(1, 1, 1..n)'
+treatment = rbinomial(n, 1, 1, .5)
+Y = rnormal(n, 1, 0, 1) 
+Y = Y + .5*treatment
+idx = st_addvar("double", ("ID", "status", "PO"))
+
+/* idx just stores the new column numbers, here 13, 14, 15 */
+/* can also use (void) st_addvar if you don't care about those .. */
+/* those columns are empty until filled with st_store */
+
+st_store(., 13, id)
+st_store(., 14, treatment)
+st_store(., 15, Y)
+
+end
+display c(k) /* now 15 variables */
+reg PO status
+
+
+
