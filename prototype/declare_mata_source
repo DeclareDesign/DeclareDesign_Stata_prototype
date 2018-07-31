@@ -1,0 +1,29 @@
+class design{
+    real scalar n, m                 /* m treated units */
+    numeric matrix id, treatment     /* matrices to ultimately allow cluster assignemnt */
+    pop(), PO(), estimand(), assign(), reveal(), estimator()        
+    /* wrappers for declare_* functions */
+}
+
+function design::pop()
+{
+  return(declare_population(n))
+}
+
+function design::assign()
+{
+  return(declare_assignment(id, m))
+}
+
+function declare_population(N){
+  id = (1..N)'
+  return(id)
+}
+
+function declare_assignment(numeric matrix id, m){
+
+    treatment = J(rows(id), 1, 0)
+    treatment[1..m] = treatment[1..m] :+ 1
+    return(treatment)
+
+}

@@ -246,7 +246,7 @@ st_store(., 15, Y)
 
 end
 display c(k) /* now 15 variables */
-reg PO status
+reg PO status /* stata reg with mata created vars */
 
 
 

@@ -1,0 +1,7 @@
+declare_population 100
+summarize id
+declare_assignment 40
+summarize   
+/* 40 percent assigned */
+
+mata: mata drop declared /* when all done */
