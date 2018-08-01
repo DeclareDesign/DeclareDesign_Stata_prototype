@@ -100,5 +100,18 @@ function declare_assignment(numeric matrix id, m){
 
 }
 
+/* post-design (not implemented) */ 
+
+class diagnosis extends design{
+
+  string vector diagnosands
+  real scalar Nsims
+  matrix sims
+  
+  diagnose_design(), draw_data(), get_estimates(), get_estimands()
+  declare_diagnosands(), declare_reveal()
+  
+}
+
 
 
