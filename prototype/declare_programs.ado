@@ -16,16 +16,11 @@ program define declare_population
 end
 
 /* input number of treated units m */
-/* M is inelegant but only stata 'variables' and strings may pass... */
 
 capture program drop declare_assignment
 program define declare_assignment
-  quietly gen M = `1'                   
-  putmata M, replace
-  mata: st_view(m = ., ., "M") 
-  mata: declared.m = m[1]
+  mata: declared.m = `1'
   mata: declared.treatment = declared.assign()
-  drop M
   mata: colnum = st_addvar("double", "treatment")
   mata: st_store(., colnum, declared.treatment)
   display: "Assignment declared; design now contains treatment status."
