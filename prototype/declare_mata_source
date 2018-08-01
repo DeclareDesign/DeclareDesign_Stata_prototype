@@ -2,6 +2,7 @@ class design{
     real scalar n, m, delta          /* m treated units, delta treatment effect */
     numeric matrix id, treatment     /* matrices to ultimately allow cluster assignemnt */
     string scalar distribution
+    real scalar param1, param2       /* parameters for distribution of Y */
     pop(), PO(), estimand(), assign(), reveal(), estimator()        
     /* wrappers for declare_* functions */
 }

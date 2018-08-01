@@ -29,7 +29,11 @@ end
 capture program drop declare_potential_outcomes
 program define declare_potential_outcomes
   mata: declared.distribution = "`1'"
-  mata: declared.delta = `2'
+  mata: declared.param1 = `2'
+  mata: declared.param2 = `3'
+  mata: declared.delta = `4'
   display "Potential outcomes declared; design now contains Y's distribution as well parameters for Y_Z_1 and Y_Z_0."
 end  
+
+
   

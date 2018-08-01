@@ -3,6 +3,6 @@ summarize id
 declare_assignment 40
 summarize   
 /* 40 percent assigned */
-declare_potential_outcomes "normal" 7
+declare_potential_outcomes "normal" 0 1 .7
 
 mata: mata drop declared /* when all done */
