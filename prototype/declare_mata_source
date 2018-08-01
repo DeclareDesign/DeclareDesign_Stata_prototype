@@ -1,6 +1,7 @@
 class design{
-    real scalar n, m                 /* m treated units */
+    real scalar n, m, delta          /* m treated units, delta treatment effect */
     numeric matrix id, treatment     /* matrices to ultimately allow cluster assignemnt */
+    string scalar distribution
     pop(), PO(), estimand(), assign(), reveal(), estimator()        
     /* wrappers for declare_* functions */
 }
@@ -14,6 +15,7 @@ function design::assign()
 {
   return(declare_assignment(id, m))
 }
+
 
 function declare_population(N){
   id = (1..N)'

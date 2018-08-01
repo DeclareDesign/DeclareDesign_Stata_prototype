@@ -30,4 +30,11 @@ program define declare_assignment
   mata: st_store(., colnum, declared.treatment)
   display: "Assignment declared; design now contains treatment status."
 end
+
+capture program drop declare_potential_outcomes
+program define declare_potential_outcomes
+  mata: declared.distribution = "`1'"
+  mata: declared.delta = `2'
+  display "Potential outcomes declared; design now contains Y's distribution as well parameters for Y_Z_1 and Y_Z_0."
+end  
   
