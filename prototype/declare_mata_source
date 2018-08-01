@@ -1,10 +1,11 @@
 class design{
-    real scalar n, m, delta          /* m treated units, delta treatment effect */
-    numeric matrix id, treatment     /* matrices to ultimately allow cluster assignemnt */
-    string scalar distribution
+    real scalar n, m, delta, seed    /* m treated units, delta Z effect */
+    numeric matrix Y, id, Z     /* matrices to ultimately allow cluster assignment */
+    string scalar distribution, estimand, estimator
+    string vector x_variables
     real scalar param1, param2       /* parameters for distribution of Y */
-    pop(), PO(), estimand(), assign(), reveal(), estimator()        
-    /* wrappers for declare_* functions */
+    pop(), PO(), estimand(), assign(), estimator()  /* reveal() */      
+    /* helper functions, wrappers for declare_* functions */
 }
 
 function design::pop()
@@ -17,6 +18,74 @@ function design::assign()
   return(declare_assignment(id, m))
 }
 
+function design::estimand(){
+  if(estimand == "ATE"){
+    mean(Y :* Z - Y :* (1 :- Z))
+  }else{
+      "only ATE is implemented"
+  }
+}
+
+function design::estimator(){
+  x_variables = tokens(estimator)  /* assumes input "Y Z" or "Y Z x1 x2 x3" */
+  x_variables = x_variables[2..length(x_variables)]
+}
+
+function design::PO(){
+
+/*
+distribution must be "bernoulli", "binomial", "normal"
+If Gaussian, param1 is mean and param2 is sd; potential outcomes Y ~ N(delta*Z + mu, sd)
+If Bernoulli, Y ~ bernoulli(delta*Z + p)
+If Binomial, param2 is k, the number of trials
+*/
+
+    if(distribution == "normal"){
+
+        Y = rnormal(n, 1, param1, param2) 
+        Y = Y + delta*Z
+  
+    } 
+
+    if(distribution == "bernoulli"){
+
+        Y = J(n, 1, 0)
+
+        Y_Z_0 = rbinomial(n, 1, 1, param1)
+        Y_Z_1 = rbinomial(n, 1, 1, param1 + delta)
+
+        for(i=1; i<=n; i++){
+            if(Z[i] == 1){
+                Y[i] = Y_Z_1[i]
+            }else{
+                Y[i] = Y_Z_0[i]
+            }
+        }
+    }
+
+    if(distribution == "binomial"){
+
+        Y = J(n, 1, 0)
+
+        Y_Z_0 = rbinomial(n, 1, param2, param1)
+        Y_Z_1 = rbinomial(n, 1, param2, param1 + delta)
+
+        for(i=1; i<=n; i++){
+            if(Z[i] == 1){
+                Y[i] = Y_Z_1[i]
+            }else{
+                Y[i] = Y_Z_0[i]
+            }
+        }
+    }    
+    return(Y)
+
+}
+
+
+
+
+/* functions that could be called independently (or collapsed into the above functions)... */
 
 function declare_population(N){
   id = (1..N)'
@@ -25,8 +94,11 @@ function declare_population(N){
 
 function declare_assignment(numeric matrix id, m){
 
-    treatment = J(rows(id), 1, 0)
-    treatment[1..m] = treatment[1..m] :+ 1
-    return(treatment)
+    Z = J(rows(id), 1, 0)
+    Z[1..m] = Z[1..m] :+ 1
+    return(Z)
 
 }
+
+
+

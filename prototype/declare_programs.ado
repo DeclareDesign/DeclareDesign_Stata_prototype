@@ -35,5 +35,18 @@ program define declare_potential_outcomes
   display "Potential outcomes declared; design now contains Y's distribution as well parameters for Y_Z_1 and Y_Z_0."
 end  
 
+capture program drop declare_estimand
+program define declare_estimand
+  mata: declared.estimand = `1'
+  display: "Estimand declared."
+end
+
+capture program drop declare_estimator
+program define declare_estimator
+  mata: declared.estimand = `1'
+end
+
+
+
 
   
