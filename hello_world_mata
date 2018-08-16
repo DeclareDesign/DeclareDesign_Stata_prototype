@@ -227,6 +227,7 @@ display c(k)
 putmata * 
 /* above passes all variables to MATA */
 /* putmata allows [if] [in] [,options] */
+/* note this is for VARIABLES not other objects like matrices */
 
 mata
 n = rows(mpg)
@@ -247,6 +248,28 @@ st_store(., 15, Y)
 end
 display c(k) /* now 15 variables */
 reg PO status /* stata reg with mata created vars */
+
+/* running stata commands from mata */
+/* assume clear session... */
+
+mata
+function test(X)
+{
+  return(X)
+}
+
+stata("sysuse auto")
+stata("quietly reg mpg weight")
+stata("ereturn list")
+stata("matrix b = e(b)")
+
+cmd = `"set obs 2000"'
+stata(cmd)
+
+/* eval(parse()) type syntax */
+cmd = `"set obs %f"'
+stata(sprintf(cmd, 5000))
+
 
 
 
