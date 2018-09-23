@@ -31,12 +31,12 @@ declare_programs.ado  design.mo  diagnose.ado  two_arm_designer.ado  two_arm.md
 Here is an approach that starts the user off in `STATA` and then displays to the user how to enter the relevant constants (using very basic `MATA` syntax). 
 
 ```STATA
-two_arm_designer myexperiment
+two_arm_designer mydesign
 ```
 That will initialize the design and prompt users about their options.
 ```STATA
-New two arm design stored as 'declared' with declared.name:
-  myexperiment
+New two arm design stored as:
+  mydesign
 The underlying population is distributed:
 U_0 ~ Normal(0, 1)
 U_1 ~ Normal(U_0, sqrt(1 - rho^2))
@@ -49,21 +49,21 @@ You may wish to alter the following constants:
    N (default: 100), N_sims (default: 500),
    assignment_prob (default: 0.5),
    control_mean (default: 0), control_sd (default: 1),
-   treatment_mean (default: 0.5), treatment_sd (default: 1),
+   treatme_mean (default: 0.5), treatment_sd (default: 1),
    rho (default: 1),
    estimand (default: 'ATE').
 
 Update parameters as follows:
-   mata: declared.N = 1000
-   mata: declared.rho = .4
+   mata: mydesign.N = 1000
+   mata: mydesign.rho = .4
 
 To make a copy of this design:
-   mata: my_copy = declared
+   mata: my_copy = mydesign
 
 Finally, to diagnose run the STATA command:
    diagnose [designname]
-   diagnose declared
-   diagnose my_experiment
+   diagnose mydesign
+   diagnose my_copy
 ```
 
 

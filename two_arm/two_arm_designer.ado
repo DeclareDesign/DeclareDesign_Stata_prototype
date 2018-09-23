@@ -1,20 +1,20 @@
 capture program drop two_arm_designer
 program define two_arm_designer
-  mata: declared = design()
-  mata: declared.name = "`1'"
-  mata: declared.design = "two_arm"
-  mata: declared.N = 100
-  mata: declared.N_sims = 500
-  mata: declared.assignment_prob = 0.5
-  mata: declared.control_mean = 0
-  mata: declared.control_sd = 1
-  mata: declared.treatment_mean = 0.5
-  mata: declared.treatment_sd = 1
-  mata: declared.rho = 1
-  mata: declared.estimand = "ATE"
+  mata: `1' = design()
+  mata: `1'.name = "`1'"
+  mata: `1'.design = "two_arm"
+  mata: `1'.N = 100
+  mata: `1'.N_sims = 500
+  mata: `1'.assignment_prob = 0.5
+  mata: `1'.control_mean = 0
+  mata: `1'.control_sd = 1
+  mata: `1'.treatment_mean = 0.5
+  mata: `1'.treatment_sd = 1
+  mata: `1'.rho = 1
+  mata: `1'.estimand = "ATE"
   display ""
-  display "New two arm design stored as 'declared' with declared.name:"
-  mata: declared.name
+  display "New two arm design stored as:"
+  mata: `1'.name
   display "The underlying population is distributed:" 
   display "U_0 ~ Normal(0, 1)"
   display "U_1 ~ Normal(U_0, sqrt(1 - rho^2))"
@@ -31,14 +31,14 @@ program define two_arm_designer
   display "   estimand (default: 'ATE')."
   display ""
   display "Update parameters as follows:"
-  display "   mata: declared.N = 1000"
-  display "   mata: declared.rho = .4"
+  display "   mata: `1'.N = 1000"
+  display "   mata: `1'.rho = .4"
   display ""
   display "To make a copy of this design:"
-  display "   mata: my_copy = declared"
+  display "   mata: my_copy = `1'"
   display ""
   display "Finally, to diagnose run the STATA command:"
   display "   diagnose [designname]"
-  display "   diagnose declared"
-  display "   diagnose my_experiment"
+  display "   diagnose `1'"
+  display "   diagnose my_copy"
 end
