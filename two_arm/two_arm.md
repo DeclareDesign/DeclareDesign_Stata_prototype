@@ -22,7 +22,7 @@ The above should yield something like
 . personal dir
 your personal ado-directory is ~/MATA/two_arm/
 
-design.mo  diagnose.ado  two_arm_designer.ado
+declare_programs.ado  design.mo  diagnose.ado  two_arm_designer.ado  two_arm.md
 ```
 
 
@@ -37,12 +37,21 @@ That will initialize the design and prompt users about their options.
 ```STATA
 New two arm design stored as 'declared' with declared.name:
   myexperiment
+The underlying population is distributed:
+U_0 ~ Normal(0, 1)
+U_1 ~ Normal(U_0, sqrt(1 - rho^2))
+
+with potential outcomes:
+Y := (1 - Z) :* (u_0 :* control_sd + control_mean) + Z:* (u_1 :* treatment_sd + treatment_me
+> an))
 
 You may wish to alter the following constants:
-   N (default: 100), assignment_prob (default: 0.5),
+   N (default: 100), N_sims (default: 500),
+   assignment_prob (default: 0.5),
    control_mean (default: 0), control_sd (default: 1),
    treatment_mean (default: 0.5), treatment_sd (default: 1),
-   rho (1).
+   rho (default: 1),
+   estimand (default: 'ATE').
 
 Update parameters as follows:
    mata: declared.N = 1000
