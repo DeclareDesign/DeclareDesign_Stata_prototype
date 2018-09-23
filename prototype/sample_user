@@ -1,13 +1,18 @@
-declare_population 100
+declare_design "my_pop"
+
 summarize id
 declare_assignment 40
 summarize   
-/* 40 percent assigned */
+// 40 percent assigned
 
-/* below don't return anything to STATA */
-declare_potential_outcomes "normal" 0 1 .7 
-declare_estimand "ATE"
-declare_estimator "Y Z"
-/* design declared */ 
+// below don't return anything to STATA
+declare_potential_outcomes "normal" 0 1 .7
 
-mata: mata drop declared /* when all done */
+// functions below are full STATA commands
+
+declare_estimand "mean(Y_Z_1 - Y_Z_0)"
+declare_estimator "reg Y Z"
+
+// design declared  
+
+mata: mata drop my_pop // when all done 

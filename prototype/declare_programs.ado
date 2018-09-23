@@ -1,28 +1,42 @@
 /* input sample size */
 /* likely will have separate declare_existing_population */
 
-capture program drop declare_population
-program define declare_population   
-  clear                             
-  set obs `1'
-  range id 1 `1'
-  putmata id, replace
-  mata: st_view(id = ., ., "id")
-  mata: declared = design()     /* initialize object, will exist after program ends */
-  mata: N = rows(id)
-  mata: declared.n = N
-  mata: declared.id = declared.pop()
-  display "Population declared; design initialized with id variable (but not other elements)."
+capture program drop declare_design
+program define declare_design
+  mata: declared = design()
+  mata: declared.name = "`1'"
+  display "New design declared:"
+  mata: declared.name
+  display ""
+  display "Here are some commands:"
+  display "declare_population 100"
+  display "Note: above command is not executed until runtime (e.g. simulation). The command will:"
+  display "set obs 100"
+//  local nuissance  `"declare_existing_population "set obs 100""'
+//  display `"`nuissance'"'
+  
 end
+
+program define bonjour
+  display "`1'"
+end
+
+capture program drop declare_population
+program define declare_population 
+  mata: declared.initialize = "`1'"
+  display: "On execution, a population will be initialized with the following command:"
+  mata: declared.initialize
+end
+
 
 /* input number of treated units m */
 
 capture program drop declare_assignment
 program define declare_assignment
   mata: declared.m = `1'
-  mata: declared.treatment = declared.assign()
+  mata: declared.z = declared.assign()
   mata: colnum = st_addvar("double", "treatment")
-  mata: st_store(., colnum, declared.treatment)
+  mata: st_store(., colnum, declared.z)
   display: "Assignment declared; design now contains treatment status."
 end
 
@@ -46,7 +60,20 @@ program define declare_estimator
   mata: declared.estimand = `1'
 end
 
+estimator reg, VCE; regular variable generation; estimation
+save instatianted decarlared object
+summary from mata side (print object)
+fix ATE for Y_Z_0
 
+clear two arm, diagnosis; all 
+
+estimators, subsetting ...
+
+different steps, different orders
+
+build step
+
+another level, step1, step2, step3... 
 
 
   

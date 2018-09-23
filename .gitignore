@@ -9,3 +9,5 @@ to_replicate.R
 myregress11.ado
 declare_population_stata10.ado
 old/
+two_arm/etc
+*DS_Store

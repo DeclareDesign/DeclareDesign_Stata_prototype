@@ -1,12 +1,22 @@
 class design{
-    real scalar n, m, delta, seed    /* m treated units, delta Z effect */
-    numeric matrix Y, id, Z     /* matrices to ultimately allow cluster assignment */
-    string scalar distribution, estimand, estimator
+
+    string initialize /* STATA command */
+    real scalar n 
+    real scalar p, m /* m treated units or probablity p */
+                     /* suppose a = design() */
+                     /* a.m == . equivalent to is.null() for a.m */
+    real scalar delta
+    real scalar var1, var2, rho /* or use matrix Sigma */
+    real scalar seed    
+    numeric matrix Y, id, Z, Sigma     
+    string scalar name, distribution, estimand, estimator
     string vector x_variables
     real scalar param1, param2       /* parameters for distribution of Y */
-    pop(), PO(), estimand(), assign(), estimator()  /* reveal() */      
+    pop(), PO(), estimand(), assign(), estimator(), reveal()       
     /* helper functions, wrappers for declare_* functions */
 }
+
+
 
 function design::pop()
 {
@@ -20,7 +30,7 @@ function design::assign()
 
 function design::estimand(){
   if(estimand == "ATE"){
-    mean(Y :* Z - Y :* (1 :- Z))
+    mean(Y_Z_1 :- Y_Z_0)
   }else{
       "only ATE is implemented"
   }
@@ -52,7 +62,7 @@ If Binomial, param2 is k, the number of trials
         Y = J(n, 1, 0)
 
         Y_Z_0 = rbinomial(n, 1, 1, param1)
-        Y_Z_1 = rbinomial(n, 1, 1, param1 + delta)
+        Y_Z_1 = rbinomial(n, 1, 1, param1 + delta) /* 
 
         for(i=1; i<=n; i++){
             if(Z[i] == 1){
@@ -99,6 +109,11 @@ function declare_assignment(numeric matrix id, m){
     return(Z)
 
 }
+
+class twoarm extends design{
+  real rho
+}
+
 
 /* post-design (not implemented) */ 
 
