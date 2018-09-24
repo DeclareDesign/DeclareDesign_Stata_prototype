@@ -49,9 +49,10 @@ You may wish to alter the following constants:
    N (default: 100), N_sims (default: 500),
    assignment_prob (default: 0.5),
    control_mean (default: 0), control_sd (default: 1),
-   treatme_mean (default: 0.5), treatment_sd (default: 1),
+   treatment_mean (default: 0.5), treatment_sd (default: 1),
    rho (default: 1),
-   estimand (default: 'ATE').
+   estimand (default: 'ATE'),
+   seed: 4555
 
 Update parameters as follows:
    mata: mydesign.N = 1000
@@ -63,7 +64,15 @@ To make a copy of this design:
 Finally, to diagnose run the STATA command:
    diagnose [designname]
    diagnose mydesign
-   diagnose my_copy
+```
+At this point, the `design` object is created and the user can change any of the above mentioned parameters. For example,
+```STATA
+mydesign.N = 500
+```
+Once everything is set, to diagnose one simply runs:
+
+```STATA
+diagnose mydesign
 ```
 
 
@@ -75,4 +84,4 @@ At this point, I recommend ...
 
 One question is whether the key features of DeclareDesign are possible in STATA. In general, I believe they are... 
 
-Another question is whether it would be 'worth' the typical user's time to learn. In Bayesian MCMC, JAGS and STAN exist independently of user interfaces like R and Python. Most consider them to have a steep learning curve but many advanced users consider it to be 'worth it' in part because these are highly flexible, versatile systems with robust code bases. For STATA to go beyond it's existing suite of research design functions, the user interface would likely require the equivalent of R formula objects. But for the amount of effort for the user to learn those commands, they may be happier learning some R, which is portable and has a large base of existing online documentation. Or, DeclareDesign may have to make a GUI guide users throuh the input (and which would write some of the more advanced code for replicability).
+Another question is whether it would be 'worth' the typical user's time to learn. In Bayesian MCMC, `JAGS` and `STAN` exist independently of user interfaces like `R` and `Python`. Most consider them to have a steep learning curve but many advanced users consider it to be 'worth it' in part because these are highly flexible, versatile systems with robust code bases. For `STATA` to go beyond it's existing suite of research design functions, the user interface would likely require the equivalent of `R` formula objects. But for the amount of effort for the user to learn those commands, they may be happier learning some R, which is portable and has a large base of existing online documentation. Or, DeclareDesign may have to make a GUI guide users throuh the input (and which would write some of the more advanced code for replicability).

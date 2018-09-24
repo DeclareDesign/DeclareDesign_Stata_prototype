@@ -12,6 +12,7 @@ program define two_arm_designer
   mata: `1'.treatment_sd = 1
   mata: `1'.rho = 1
   mata: `1'.estimand = "ATE"
+  mata: `1'.seed = ceil(runiform(1,1,0,10000))
   display ""
   display "New two arm design stored as:"
   mata: `1'.name
@@ -28,7 +29,8 @@ program define two_arm_designer
   display "   control_mean (default: 0), control_sd (default: 1),"
   display "   treatment_mean (default: 0.5), treatment_sd (default: 1),"
   display "   rho (default: 1),"
-  display "   estimand (default: 'ATE')."
+  display "   estimand (default: 'ATE'),"
+  mata: " seed: " + strofreal(`1'.seed)
   display ""
   display "Update parameters as follows:"
   display "   mata: `1'.N = 1000"
@@ -40,5 +42,4 @@ program define two_arm_designer
   display "Finally, to diagnose run the STATA command:"
   display "   diagnose [designname]"
   display "   diagnose `1'"
-  display "   diagnose my_copy"
 end
