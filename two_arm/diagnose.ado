@@ -7,7 +7,7 @@ program define diagnose
   mata: `1'.pop()
   mata: `1'.assign()
   mata: `1'.PO()
-  mata: `1'.estimands()
+  mata: `1'.estimand()
   mata: `1'.diagnose()
   
 end

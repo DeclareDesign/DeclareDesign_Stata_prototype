@@ -5,6 +5,7 @@ program define two_arm_designer
   mata: `1'.design_type = "two_arm"
   mata: `1'.N = 100
   mata: `1'.N_sims = 500
+  mata: `1'.N_bootstrap = 100
   mata: `1'.assignment_prob = 0.5
   mata: `1'.control_mean = 0
   mata: `1'.control_sd = 1
@@ -12,6 +13,7 @@ program define two_arm_designer
   mata: `1'.treatment_sd = 1
   mata: `1'.rho = 1
   mata: `1'.estimand = "ATE"
+  mata: `1'.estimator = "OLS"
   mata: `1'.seed = ceil(runiform(1, 1, 0, 1000000))
   display ""
   display "New two arm design stored as:"
