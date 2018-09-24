@@ -64,6 +64,7 @@ Finally, to diagnose run the STATA command:
 At this point, the `design` object is created and the user can change any of the above mentioned parameters. For example,
 ```STATA
 mata: mydesign.N = 600
+mata: mydesign.treatment_mean = .3
 ```
 Once everything is set, to diagnose one simply runs:
 
@@ -73,11 +74,11 @@ diagnose mydesign
 which yields ...
 
 ```STATA
-. diagnose myexperiment
-  seed set to 518677
-  
+. diagnose mydesign
+
 Starting diagnosis...
 
+  seed set to 348872
 
   Research design diagnosis based on 500 simulations. Diagnosand estimates:
 
@@ -85,15 +86,15 @@ Starting diagnosis...
   Estimand label: ATE
   Estimator label: OLS
   N sims: 500
-  Bias: .0068421
-  Mean estimate: .5068421
-  SD estimate: .2019624
-  Mean estimand: .5
-  Type S error rate:.01
+  Bias: .0058667
+  Mean Estimate: .3058667
+  SD Estimate: .0824047
+  Mean estimand: .3
+  Type S error rate: 0
 
 All estimates may accessed as follows:
-   mata: myexperiment.Mean_Estimate
-   mata: myexperiment.Type_S_Rate
+   mata: mydesign.Mean_Estimate
+   mata: mydesign.Type_S_Rate
 ```
 
 
