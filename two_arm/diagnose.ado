@@ -12,13 +12,15 @@ program define diagnose
   mata: "Research design diagnosis based on " + strofreal(`1'.N_sims) + " simulations. Diagnosand estimates."
   mata: "Design label: " + `1'.design_type
   mata: "Estimand label: " + `1'.estimand
-  mata: "Estimator label: " + `1'.estimand
+  mata: "Estimator label: " + `1'.estimator
   mata: "N sims: " + strofreal(`1'.N_sims) 
-  mata: "Bias: " + strofreal(`1'.Bias)
+  mata: "Bias: " + strofreal(`1'.bias)
   mata: "Mean estimate: " + strofreal(`1'.Mean_Estimate)
   mata: "SD estimate: " + strofreal(`1'.SD_Estimate)
   mata: "Mean estimand: " + strofreal(`1'.Mean_Estimand)
+  mata: "Type S error rate:" + strofreal(`1'.Type_S_Rate)
   display ""
   display "All estimates may accessed as follows:"
- display "   mata: `1'.Mean_Estimate = 0.4"
+  display "   mata: `1'.Mean_Estimate"
+  display "   mata: `1'.Type_S_Rate"
 end
