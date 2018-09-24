@@ -70,6 +70,32 @@ Once everything is set, to diagnose one simply runs:
 ```STATA
 diagnose mydesign
 ```
+which yields ...
+
+```STATA
+. diagnose myexperiment
+  seed set to 518677
+  
+Starting diagnosis...
+
+
+  Research design diagnosis based on 500 simulations. Diagnosand estimates:
+
+  Design label: two_arm
+  Estimand label: ATE
+  Estimator label: OLS
+  N sims: 500
+  Bias: .0068421
+  Mean estimate: .5068421
+  SD estimate: .2019624
+  Mean estimand: .5
+  Type S error rate:.01
+
+All estimates may accessed as follows:
+   mata: myexperiment.Mean_Estimate
+   mata: myexperiment.Type_S_Rate
+```
+
 
 
 # Customizability vs. User-Friendliness
