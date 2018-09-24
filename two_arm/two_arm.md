@@ -58,16 +58,13 @@ Update parameters as follows:
    mata: mydesign.N = 1000
    mata: mydesign.rho = .4
 
-To make a copy of this design:
-   mata: my_copy = mydesign
-
 Finally, to diagnose run the STATA command:
    diagnose [designname]
    diagnose mydesign
 ```
 At this point, the `design` object is created and the user can change any of the above mentioned parameters. For example,
 ```STATA
-mydesign.N = 500
+mata: mydesign.N = 500
 ```
 Once everything is set, to diagnose one simply runs:
 
