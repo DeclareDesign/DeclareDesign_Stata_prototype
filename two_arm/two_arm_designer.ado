@@ -2,7 +2,7 @@ capture program drop two_arm_designer
 program define two_arm_designer
   mata: `1' = design()
   mata: `1'.name = "`1'"
-  mata: `1'.design = "two_arm"
+  mata: `1'.design_type = "two_arm"
   mata: `1'.N = 100
   mata: `1'.N_sims = 500
   mata: `1'.assignment_prob = 0.5
