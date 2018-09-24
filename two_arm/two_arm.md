@@ -42,8 +42,7 @@ U_0 ~ Normal(0, 1)
 U_1 ~ Normal(U_0, sqrt(1 - rho^2))
 
 with potential outcomes:
-Y := (1 - Z) :* (u_0 :* control_sd + control_mean) + Z:* (u_1 :* treatment_sd + treatment_me
-> an))
+Y := (1 - Z) :* (u_0 :* control_sd + control_mean) + Z:* (u_1 :* treatment_sd + treatment_mean))
 
 You may wish to alter the following constants:
    N (default: 100), N_sims (default: 500),
@@ -64,7 +63,7 @@ Finally, to diagnose run the STATA command:
 ```
 At this point, the `design` object is created and the user can change any of the above mentioned parameters. For example,
 ```STATA
-mata: mydesign.N = 500
+mata: mydesign.N = 600
 ```
 Once everything is set, to diagnose one simply runs:
 
