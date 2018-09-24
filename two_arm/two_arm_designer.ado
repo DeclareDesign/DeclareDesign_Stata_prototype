@@ -12,7 +12,7 @@ program define two_arm_designer
   mata: `1'.treatment_sd = 1
   mata: `1'.rho = 1
   mata: `1'.estimand = "ATE"
-  mata: `1'.seed = ceil(runiform(1,1,0,10000))
+  mata: `1'.seed = ceil(runiform(1, 1, 0, 1000000))
   display ""
   display "New two arm design stored as:"
   mata: `1'.name
