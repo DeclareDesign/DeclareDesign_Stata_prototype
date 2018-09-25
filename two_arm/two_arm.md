@@ -159,8 +159,8 @@ A related, but less ambitious, approach would be to allow the user to import `ST
 
 # Assessment
 
-One question is whether the key features of `DeclareDesign` are possible in `STATA`. In general, they are. 
+One question is whether the key features of `DeclareDesign` are possible in `STATA`. Many are (though a full-fledged 'grammar' of research design is hard to see). 
 
 Another question is whether it would be 'worth' the typical user's time to learn. In Bayesian MCMC, `JAGS` and `STAN` exist independently of user interfaces like `R` and `Python`. Most consider them to have a steep learning curve but many advanced users consider it to be 'worth it' in part because these are highly flexible, versatile systems with robust code bases. For `STATA` to go beyond it's existing suite of research design functions, the user interface would likely require the equivalent of `R` formula objects. But for the amount of effort for the user to learn those commands, they may be better off `R`, which is portable and has a large base of existing online documentation. Or, DeclareDesign may have to make a GUI guide users throuh the input (and which would write some of the more advanced code for replicability).
 
-A middle ground option would be to build out things like `two_arm_designer` for common deisgns, estimators, etc. These estimators would require a bit of MATA-style input, do most of the estimation in `MATA`, and so be fast but not have the full customizibility of the `R` version.
+A middle ground option would be to build out things like `two_arm_designer` for common designs, estimators, etc. These estimators would require a bit of MATA-style input, do most of the estimation in `MATA`, and so be fast but not have the full customizibility of the `R` version.
