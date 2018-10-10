@@ -12,3 +12,5 @@ gen true_positive = p < 0.05 & sign(estimand) == sign(estimand)
 summarize true_positive
 
 gen false_positive = p < 0.05 & sign(estimand) != sign(estimand)
+
+simulate estimand = r(estimand) estimate = r(estimate) se = r(se) p = r(p), reps(250): twoarmX
