@@ -14,7 +14,7 @@ program twoarm, rclass
   set obs `N'
 
 ```
-Users could replace the above to use existing data. Next, constants are initialized as `locals`:
+Users could replace the above to use existing data. An example like that show data from `auto` could be incorporated as covariates can be found [here](https://github.com/DeclareDesign/MATA/blob/master/twoarm_stata_only/twoarmX.ado). Next, constants are initialized as `locals`:
 
 ```STATA
   local assignment_prob  =  0.5
