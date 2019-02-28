@@ -1,15 +1,14 @@
----
-title: DeclareDesign options in STATA
-author: Pete Mohanty
-date: October 10th, 2018
----
+# How DeclareDesign could be implemented in Stata
 
-This document discusses possibilities and obstacles to implementing `DeclareDesign` in `STATA` in light of two prototypes, both of which are implementations of a simple two-arm design. The first version, hereafter referred to as `SO` (as in, the `STATA-only` version), makes use of `simulate`. The second version, hereafter `MW` (as in, the `MATA-wrapper` version), creates a `class` for `design` objects and also does core calculations in `MATA`. 
+Author: Pete Mohanty
+Date: 10 October 2018
+
+This document discusses possibilities and obstacles to implementing `DeclareDesign` in `Stata` in light of two prototypes, both of which are implementations of a simple two-arm design. The first version, hereafter referred to as `SO` (as in, the `Stata-only` version), makes use of `simulate`. The second version, hereafter `MW` (as in, the `Mata-wrapper` version), creates a `class` for `design` objects and also does core calculations in `Mata`. 
 
 ### LINKS
 [Original R code](https://declaredesign.org/library/articles/simple_two_arm.html)  
-[SO: detailed description of STATA-only](https://github.com/DeclareDesign/MATA/blob/master/twoarm_stata_only/STATA-only.md)  
-[MW: detailed description of MATA-wrapper](https://github.com/DeclareDesign/MATA/blob/master/two_arm/two_arm.md)  
+[SO: detailed description of Stata-only](https://github.com/DeclareDesign/MATA/blob/master/twoarm_stata_only/STATA-only.md)  
+[MW: detailed description of Mata-wrapper](https://github.com/DeclareDesign/MATA/blob/master/two_arm/two_arm.md)  
 
 
 # Discussion
@@ -17,6 +16,6 @@ This document discusses possibilities and obstacles to implementing `DeclareDesi
 
 Of the two, `MW` has the potential to be faster, both because `MATA` is a lower level language and because re-implementing common estimators would give one the opportunity to skip calculations which are superfluous to the design. Those speed savings would be hardwon, however, in terms of time spent coding, and because such optimization may make user input more complicated still.
 
-`SO`, by contrast, is more user friendly. Though `MW` could be adapted to execute `STATA` regression commands, `SO` would do so in a way that's more familar  and less error-prone. (That's because `MATA` executes `STATA` commands as strings which, like `eval(parse())` in `R`, are more difficult to debug than regular code.) `SO` (in particular [twoarmX.ado](https://github.com/DeclareDesign/MATA/blob/master/twoarm_stata_only/twoarmX.ado), which shows how to incorporate covariates from existing data sets) does go beyond existing `STATA` functionality for research design. But `SO` collapses key steps of declaring and diagnosing, limiting the value-added for users with complex or atypical research designs.
+`SO`, by contrast, is more user friendly. Though `MW` could be adapted to execute `Stata` regression commands, `SO` would do so in a way that's more familar  and less error-prone. (That's because `Mata` executes `Stata` commands as strings which, like `eval(parse())` in `R`, are more difficult to debug than regular code.) `SO` (in particular [twoarmX.ado](https://github.com/DeclareDesign/MATA/blob/master/twoarm_stata_only/twoarmX.ado), which shows how to incorporate covariates from existing data sets) does go beyond existing `Stata` functionality for research design. But `SO` collapses key steps of declaring and diagnosing, limiting the value-added for users with complex or atypical research designs.
 
 
